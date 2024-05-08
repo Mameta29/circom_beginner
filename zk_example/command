@@ -1,0 +1,14 @@
+証明生成
+1. witness生成
+node generate_witness.js multiply.wasm ../input.json ../witness.wtns
+2. proof生成
+snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json
+
+検証
+snarkjs groth16 verify verification_key.json public.json proof.json
+
+オンチェーン検証
+1. 検証コントラクト生成
+snarkjs zkey export solidityverifier circuit_final.zkey verifier.sol
+2. オンチェーン検証用proof出力
+snarkjs zkey export soliditycalldata public.json proof.json
